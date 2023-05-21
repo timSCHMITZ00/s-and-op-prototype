@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Settings</title>
+{% endblock title %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+    }
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: flex;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .element {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+        padding: 20px;
+        margin: 10px;
+        width: calc(50% - 40px);
+    }
+    h1, h2 {
+        color: #333;
+    }
+    p {
+        color: #666;
+        line-height: 1.6;
+    }
+    form {
+        margin-top: 20px;
+    }
+    form input, form button, form select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    form button {
+        background-color: #333;
+        color: #fff;
+        cursor: pointer;
+    }
+    form button:hover {
+        background-color: #555;
+    }
+</style>
+
+<div class="container">
+    <div class="element">
+        <h2>Control Risk Metrics Simulation</h2>
+        <form>
+            <div class="form-group">
+                <label for="riskMetric">Select Risk Metric:</label>
+                <select id="riskMetric" onchange="updateRiskLabelAndSimulationStatus()">
+                    {% for risk_metric in all_risk_metrics %}
+                        <option value="{{ risk_metric.id }}" data-risk="{{ risk_metric.risk }}" data-simulation-status="{{ risk_metric.simulation_status }}">{{ risk_metric.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <span id="riskLabelValue"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="simulationStatus">Simulation Status:</label>
+                <select id="simulationStatus">
+                    <option value="on-decreased">On - Decreased Risk Level</option>
+                    <option value="on-stable">On - Stable Risk Level</option>
+                    <option value="on-increased">On - Increased Risk Level</option>
+                    <option value="off">Off</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit">Update Simulation</button>
+            </div>
+        </form>        
+    </div>
+    <div class="element">
+        <h2>Create New Risk</h2>
+        <form>
+            <div class="form-group">
+                <label for="riskName">Risk Name:</label>
+                <input type="text" id="riskName" placeholder="Risk Name">
+            </div>
+            <div class="form-group">
+                <label for="riskDescription">Risk Description:</label>
+                <input type="text" id="riskDescription" placeholder="Risk Description">
+            </div>
+            <div class="form-group">
+                <button type="submit">Create Risk</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function updateRiskLabelAndSimulationStatus() {
+        var riskMetricSelect = document.getElementById("riskMetric");
+        var riskLabelValue = document.getElementById("riskLabelValue");
+        var simulationStatusSelect = document.getElementById("simulationStatus");
+        var selectedRiskMetric = riskMetricSelect.options[riskMetricSelect.selectedIndex];
+
+        // Retrieve the risk value from the selected option's data attribute
+        var riskName = selectedRiskMetric.getAttribute("data-risk");
+
+        //Retrieve the simulation status from the selected option's value attribute 'simulation_status'
+        var simulationStatus = selectedRiskMetric.getAttribute("data-simulation-status");
+
+        // Update the risk label value
+        riskLabelValue.innerText = "Risk: " + riskName;
+
+        // Update the simulation status
+        simulationStatusSelect.value = simulationStatus;
+    }
+    window.onload = function() {
+        updateRiskLabelAndSimulationStatus();
+    };
+    updateRiskLabelAndSimulationStatus();
+</script>
+{% endblock content %}

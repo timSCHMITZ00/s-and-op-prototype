@@ -1,0 +1,11 @@
+.navbar-nav .nav-link {
+    color: #e0e0ce;
+  }
+
+.navbar-brand span {
+    color: #f2af29;
+  }
+
+.navbar-brand img {
+    border-radius: 50%;
+  }
