@@ -1,1 +1,1 @@
-web: gunicorn 's_and_op_tools.wsgi'
+web: gunicorn s_and_op_tools.wsgi
