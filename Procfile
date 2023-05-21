@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn s_and_op_tool.wsgi --bind 0.0.0.0:$PORT
+web: python manage.py migrate && gunicorn s_and_op_tool.wsgi
