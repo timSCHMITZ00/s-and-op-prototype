@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn s_and_op_tools.wsgi --log-file - --bind
+web: python manage.py migrate && gunicorn s_and_op_tools.wsgi
