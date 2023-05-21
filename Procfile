@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn s_and_op_tools.wsgi --bind 0.0.0.0:8000
+web: gunicorn 's_and_op_tools.wsgi'
